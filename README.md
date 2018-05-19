@@ -27,13 +27,13 @@ to indicate whether the call has succeeded or not. A successful operation result
 {
   "data":[
     [
-	  {"name":"John","age":33},
-	  {"name":"Mary","age":35},
-	  {"name":"Simon","age":23},
+      {"name":"John","age":33},
+      {"name":"Mary","age":35},
+      {"name":"Simon","age":23},
     ],
-	[
-	  {"ten":10,"pi":3.1416}
-	]
+    [
+      {"ten":10,"pi":3.1416}
+    ]
   ]
 }
 ```
@@ -43,9 +43,9 @@ A failed operation result looks like this (multiple errors are shown if linked b
 {
  "error":[
     {
-	  "type": "System.Exception",
-	  "message": "Procedure 'my_procedure' not found"
-	}
+      "type": "System.Exception",
+      "message": "Procedure 'my_procedure' not found"
+    }
   ]
 }
 ```
