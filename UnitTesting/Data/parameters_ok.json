@@ -1,0 +1,9 @@
+﻿{
+  "stringParam":"Some awesome text",
+  "decimalParam":123.45,
+  "integerParam": 12345,
+  "specialParam": {
+    "kind":"Property",
+    "name":"Special"
+  }   
+}
