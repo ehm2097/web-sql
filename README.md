@@ -13,40 +13,40 @@ Include the stored procedure name as the last part of the URL path, like "http:/
 The exact form of ther complete URL must match the mapping defined for this handler in the site's `web.config` file.
 
 Pass the procedure parameters as a JSON object whose property names match the parameter names, for instance:
-```
+```JSON
 {
-	"StringParameter":"A string value",
-	"IntegerParameter":33,
-	"DecimalParameter":123.45
+  "StringParameter":"A string value",
+  "IntegerParameter":33,
+  "DecimalParameter":123.45
 }
 ```
 
 Expect the response in the form of an array of arrays of rows (a stored procedure may return several row sets), wrapped into a JSON object
 to indicate whether the call has succeeded or not. A successful operation result looks like this (two sets of 3 and 1 row, respectively):
-```
+```JSON
 {
-	"data":[
-		[
-			{"name":"John","age":33},
-			{"name":"Mary","age":35},
-			{"name":"Simon","age":23},
-		],
-		[
-			{"ten":10,"pi":3.1416}
-		]
+  "data":[
+    [
+	  {"name":"John","age":33},
+	  {"name":"Mary","age":35},
+	  {"name":"Simon","age":23},
+    ],
+	[
+	  {"ten":10,"pi":3.1416}
 	]
+  ]
 }
 ```
 
 A failed operation result looks like this (multiple errors are shown if linked by their `InnerException` property):
-```
+```JSON
 {
-	"error":[
-		{
-			"type": "System.Exception",
-			"message": "Procedure 'my_procedure' not found"
-		}
-	]
+ "error":[
+    {
+	  "type": "System.Exception",
+	  "message": "Procedure 'my_procedure' not found"
+	}
+  ]
 }
 ```
 
@@ -77,24 +77,24 @@ The libraries (Avat.WebSqlHandler.dll and Newtonsoft.Json.dll) must be accessibl
 way to ensure this is having the files in the `\bin` folder of the site.
 
 The handler must be declared in the `web.config` file of the site and associated with a request path pattern, for instance:
-```
+```XML
 <system.webServer>
-	<handlers>
-		<add name="WebSqlHandler" path="/sql/*" verb="*" type="Avat.WebSql.Handler" resourceType="Unspecified" preCondition="integratedMode" />
-    </handlers>
+  <handlers>
+    <add name="WebSqlHandler" path="/sql/*" verb="*" type="Avat.WebSql.Handler" resourceType="Unspecified" preCondition="integratedMode" />
+  </handlers>
 </system.webServer>
 ```
 *(In this case, the handler would be passed all requests where the path starts with "sql/")*
 
 The SQL connection may be of any type (as long as the underlying database supports stored procedures) and should be declared in the `web.config` file
 of the site, under "connection strings", along with proper SQL provider identification **and named 'db'**, for instance:
-```
+```XML
 <connectionStrings>
-	<add connectionString="<adequate connection string>" name="db" providerName="adequate provider name" />
+  <add connectionString="<adequate connection string>" name="db" providerName="adequate provider name" />
 </connectionStrings>
 ```
 
-**NOTE:** The IIS Manager GUI can be used to declare the handler, but the connection string declaratuion it generates may be incomplete 
+**NOTE:** The IIS Manager GUI can be used to declare the handler, but the connection string declaration it generates may be incomplete 
 (missing provider information) so editing the `web.config` file directly may be safer.
 
 ## Test Client
