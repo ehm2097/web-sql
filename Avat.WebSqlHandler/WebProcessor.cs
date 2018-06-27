@@ -122,8 +122,12 @@ namespace Avat.WebSql
             var operationHandler = new DbStoredProcedureHandler();
             operationHandler.MetadataBuilder = new MetadataBuilder();
             operationHandler.OperationName = GetOperationName();
-            operationHandler.Database = dbFactory.GetConnection("db");
-            return operationHandler.Execute(arguments);
+
+            using (var db = dbFactory.GetConnection("db"))
+            {
+                operationHandler.Database = db;
+                return operationHandler.Execute(arguments);
+            }
         }
 
         private class AdditionalInfoSource: ObjectValueSource
